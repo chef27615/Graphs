@@ -3,6 +3,10 @@ Simple graph implementation
 """
 from util import Stack, Queue  # These may come in handy
 
+# Vertex
+# Identifier (int, name, string, etc)
+# list of edges
+
 class Graph:
     """Represent a graph as a dictionary of vertices mapping labels to edges."""
     def __init__(self):
@@ -11,45 +15,105 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
-    def add_edge(self, v1, v2):
+        if not vertex in self.vertices:
+            self.vertices[vertex] = set()
+        else:
+            print('Warning, vertex exists')
+        
+        
+    def add_edge(self, vertex_from, vertext_to):
         """
         Add a directed edge to the graph.
+        TODO: confirm intent is direction should be from v1 to v2
         """
-        pass  # TODO
+        if vertex_from in self.vertices and vertext_to in self.vertices:
+            self.vertices[vertex_from].add(vertext_to)
+        else: 
+            print('Error, vertex does not exist!')
+
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        q = Queue()
+        q.enqueue(starting_vertex)
+        found = [starting_vertex]
+
+        while q.size() > 0:
+            for vertex in self.vertices[q.queue[0]]:
+                if vertex not in found:
+                    q.enqueue(vertex)
+                    found.append(vertex)
+            q.dequeue()
+        print(found)
+            # TODO: format this more nicely
+
+        
+
+
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        stack, path = [starting_vertex], []
+        while stack:
+            vertex = stack.pop()
+            if vertex in path:
+                continue
+            path.append(vertex)
+            for neighbor in self.vertices[vertex]:
+                stack.append(neighbor)
+        return path
+            
     def dft_recursive(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         This should be done using recursion.
         """
-        pass  # TODO
+        pass
+
+
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        explored = []
+        q = [[starting_vertex]]
+        if starting_vertex == destination_vertex:
+            return 1
+        while q:
+            path = q.pop(0)
+            node = path[-1]
+            if node not in explored:
+                next_doors = self.vertices
+                for next_door in next_doors:
+                    new_path = list(path)
+                    new_path.append(next_door)
+                    q.append(new_path)
+                    if next_door == destination_vertex:
+                        return new_path
+                explored.append(node)
+        print("Error, no connection exist")  
+
     def dfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        explored = []
+        stack, path = [starting_vertex], []
+        if starting_vertex == destination_vertex:
+            return 1
+        while stack:
+            vertex = stack.pop()
+             
+
 
 
 
